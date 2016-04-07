@@ -1,0 +1,48 @@
+--- libva-intel-driver-1.7.0/configure~	2016-03-15 06:42:19.000000000 +0000
++++ libva-intel-driver-1.7.0/configure	2016-04-07 22:56:11.464119200 +0000
+@@ -14281,45 +14281,6 @@
+ 
+ 
+ pkg_failed=no
+-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for WAYLAND_SCANNER" >&5
+-$as_echo_n "checking for WAYLAND_SCANNER... " >&6; }
+-
+-if test -n "$WAYLAND_SCANNER_CFLAGS"; then
+-    pkg_cv_WAYLAND_SCANNER_CFLAGS="$WAYLAND_SCANNER_CFLAGS"
+- elif test -n "$PKG_CONFIG"; then
+-    if test -n "$PKG_CONFIG" && \
+-    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"wayland-scanner\""; } >&5
+-  ($PKG_CONFIG --exists --print-errors "wayland-scanner") 2>&5
+-  ac_status=$?
+-  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+-  test $ac_status = 0; }; then
+-  pkg_cv_WAYLAND_SCANNER_CFLAGS=`$PKG_CONFIG --cflags "wayland-scanner" 2>/dev/null`
+-		      test "x$?" != "x0" && pkg_failed=yes
+-else
+-  pkg_failed=yes
+-fi
+- else
+-    pkg_failed=untried
+-fi
+-if test -n "$WAYLAND_SCANNER_LIBS"; then
+-    pkg_cv_WAYLAND_SCANNER_LIBS="$WAYLAND_SCANNER_LIBS"
+- elif test -n "$PKG_CONFIG"; then
+-    if test -n "$PKG_CONFIG" && \
+-    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"wayland-scanner\""; } >&5
+-  ($PKG_CONFIG --exists --print-errors "wayland-scanner") 2>&5
+-  ac_status=$?
+-  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+-  test $ac_status = 0; }; then
+-  pkg_cv_WAYLAND_SCANNER_LIBS=`$PKG_CONFIG --libs "wayland-scanner" 2>/dev/null`
+-		      test "x$?" != "x0" && pkg_failed=yes
+-else
+-  pkg_failed=yes
+-fi
+- else
+-    pkg_failed=untried
+-fi
+-
+-
+ 
+ if test $pkg_failed = yes; then
+    	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
