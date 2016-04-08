@@ -4,7 +4,7 @@
 #
 Name     : libva-intel-driver
 Version  : 1.7.0
-Release  : 1
+Release  : 2
 URL      : https://www.freedesktop.org/software/vaapi/releases/libva-intel-driver/libva-intel-driver-1.7.0.tar.bz2
 Source0  : https://www.freedesktop.org/software/vaapi/releases/libva-intel-driver/libva-intel-driver-1.7.0.tar.bz2
 Summary  : No detailed summary available
