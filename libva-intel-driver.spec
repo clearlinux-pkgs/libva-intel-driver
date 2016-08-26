@@ -4,7 +4,7 @@
 #
 Name     : libva-intel-driver
 Version  : 1.7.1
-Release  : 5
+Release  : 6
 URL      : https://www.freedesktop.org/software/vaapi/releases/libva-intel-driver/libva-intel-driver-1.7.1.tar.bz2
 Source0  : https://www.freedesktop.org/software/vaapi/releases/libva-intel-driver/libva-intel-driver-1.7.1.tar.bz2
 Summary  : No detailed summary available
@@ -16,6 +16,7 @@ BuildRequires : pkgconfig(egl)
 BuildRequires : pkgconfig(libdrm)
 BuildRequires : pkgconfig(libva)
 BuildRequires : pkgconfig(libva-drm)
+BuildRequires : pkgconfig(libva-wayland)
 BuildRequires : pkgconfig(libva-x11)
 
 %description
@@ -37,13 +38,14 @@ lib components for the libva-intel-driver package.
 %setup -q -n libva-intel-driver-1.7.1
 
 %build
+export LANG=C
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -fno-semantic-interposition -falign-functions=32 -flto "
-export FCFLAGS="$CFLAGS -O3 -fno-semantic-interposition -falign-functions=32 -flto "
-export FFLAGS="$CFLAGS -O3 -fno-semantic-interposition -falign-functions=32 -flto "
-export CXXFLAGS="$CXXFLAGS -O3 -fno-semantic-interposition -falign-functions=32 -flto "
+export CFLAGS="$CFLAGS -fno-semantic-interposition -falign-functions=32 -O3 "
+export FCFLAGS="$CFLAGS -fno-semantic-interposition -falign-functions=32 -O3 "
+export FFLAGS="$CFLAGS -fno-semantic-interposition -falign-functions=32 -O3 "
+export CXXFLAGS="$CXXFLAGS -fno-semantic-interposition -falign-functions=32 -O3 "
 %configure --disable-static --disable-wayland
 make V=1  %{?_smp_mflags}
 
