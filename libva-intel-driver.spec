@@ -4,9 +4,9 @@
 #
 Name     : libva-intel-driver
 Version  : 1.7.3
-Release  : 9
-URL      : https://www.freedesktop.org/software/vaapi/releases/libva-intel-driver/libva-intel-driver-1.7.3.tar.bz2
-Source0  : https://www.freedesktop.org/software/vaapi/releases/libva-intel-driver/libva-intel-driver-1.7.3.tar.bz2
+Release  : 10
+URL      : https://github.com/01org/intel-vaapi-driver/archive/1.7.3.tar.gz
+Source0  : https://github.com/01org/intel-vaapi-driver/archive/1.7.3.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause MIT
@@ -35,15 +35,16 @@ lib components for the libva-intel-driver package.
 
 
 %prep
-%setup -q -n libva-intel-driver-1.7.3
+%setup -q -n intel-vaapi-driver-1.7.3
 
 %build
 export LANG=C
+export SOURCE_DATE_EPOCH=1486063173
 export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
 export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
 export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
 export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
-%configure --disable-static
+%autogen --disable-static
 make V=1  %{?_smp_mflags}
 
 %check
@@ -54,6 +55,7 @@ export no_proxy=localhost
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
+export SOURCE_DATE_EPOCH=1486063173
 rm -rf %{buildroot}
 %make_install
 
