@@ -4,7 +4,7 @@
 #
 Name     : libva-intel-driver
 Version  : 1.7.3
-Release  : 10
+Release  : 11
 URL      : https://github.com/01org/intel-vaapi-driver/archive/1.7.3.tar.gz
 Source0  : https://github.com/01org/intel-vaapi-driver/archive/1.7.3.tar.gz
 Summary  : No detailed summary available
@@ -39,7 +39,7 @@ lib components for the libva-intel-driver package.
 
 %build
 export LANG=C
-export SOURCE_DATE_EPOCH=1486063173
+export SOURCE_DATE_EPOCH=1486080602
 export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
 export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
 export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
@@ -55,7 +55,7 @@ export no_proxy=localhost
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1486063173
+export SOURCE_DATE_EPOCH=1486080602
 rm -rf %{buildroot}
 %make_install
 
