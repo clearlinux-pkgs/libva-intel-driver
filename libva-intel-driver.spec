@@ -4,7 +4,7 @@
 #
 Name     : libva-intel-driver
 Version  : 1.8.1
-Release  : 13
+Release  : 14
 URL      : https://github.com/01org/intel-vaapi-driver/archive/1.8.1.tar.gz
 Source0  : https://github.com/01org/intel-vaapi-driver/archive/1.8.1.tar.gz
 Summary  : No detailed summary available
