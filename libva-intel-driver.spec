@@ -4,7 +4,7 @@
 #
 Name     : libva-intel-driver
 Version  : 1.8.2
-Release  : 15
+Release  : 16
 URL      : https://github.com/01org/intel-vaapi-driver/archive/1.8.2.tar.gz
 Source0  : https://github.com/01org/intel-vaapi-driver/archive/1.8.2.tar.gz
 Summary  : No detailed summary available
@@ -47,12 +47,15 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1495728152
-export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
-export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
-export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
-export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
-%autogen --disable-static
+export SOURCE_DATE_EPOCH=1498321240
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto -fno-semantic-interposition "
+export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto -fno-semantic-interposition "
+export FFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto -fno-semantic-interposition "
+export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto -fno-semantic-interposition "
+%autogen --disable-static --enable-hybrid-codec
 make V=1  %{?_smp_mflags}
 
 %check
@@ -63,7 +66,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1495728152
+export SOURCE_DATE_EPOCH=1498321240
 rm -rf %{buildroot}
 %make_install
 
