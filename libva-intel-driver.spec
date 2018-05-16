@@ -4,7 +4,7 @@
 #
 Name     : libva-intel-driver
 Version  : 2.1.0
-Release  : 21
+Release  : 22
 URL      : https://github.com/intel/intel-vaapi-driver/releases/download/2.1.0/intel-vaapi-driver-2.1.0.tar.bz2
 Source0  : https://github.com/intel/intel-vaapi-driver/releases/download/2.1.0/intel-vaapi-driver-2.1.0.tar.bz2
 Summary  : No detailed summary available
