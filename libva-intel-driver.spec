@@ -4,15 +4,15 @@
 #
 Name     : libva-intel-driver
 Version  : 2.1.0
-Release  : 22
+Release  : 23
 URL      : https://github.com/intel/intel-vaapi-driver/releases/download/2.1.0/intel-vaapi-driver-2.1.0.tar.bz2
 Source0  : https://github.com/intel/intel-vaapi-driver/releases/download/2.1.0/intel-vaapi-driver-2.1.0.tar.bz2
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause MIT
 Requires: libva-intel-driver-lib
-BuildRequires : libdrm-dev
 BuildRequires : pkgconfig(egl)
+BuildRequires : pkgconfig(intel-gen4asm)
 BuildRequires : pkgconfig(libdrm)
 BuildRequires : pkgconfig(libva)
 BuildRequires : pkgconfig(libva-drm)
@@ -22,7 +22,7 @@ BuildRequires : pkgconfig(wayland-client)
 BuildRequires : pkgconfig(x11)
 BuildRequires : pkgconfig(xext)
 BuildRequires : pkgconfig(xfixes)
-BuildRequires : python3-dev
+BuildRequires : python
 
 %description
 intel-vaapi-driver
@@ -47,7 +47,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1518466611
+export SOURCE_DATE_EPOCH=1528237896
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -66,7 +66,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1518466611
+export SOURCE_DATE_EPOCH=1528237896
 rm -rf %{buildroot}
 %make_install
 
