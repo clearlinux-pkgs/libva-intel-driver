@@ -1,0 +1,3 @@
+this driver libva-intel-driver is still functional with
+newer versions of libva.  It can be recompiled upon new libva 
+release

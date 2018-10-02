@@ -4,14 +4,14 @@
 #
 Name     : libva-intel-driver
 Version  : 2.2.0
-Release  : 24
+Release  : 25
 URL      : https://github.com/intel/intel-vaapi-driver/releases/download/2.2.0/intel-vaapi-driver-2.2.0.tar.bz2
 Source0  : https://github.com/intel/intel-vaapi-driver/releases/download/2.2.0/intel-vaapi-driver-2.2.0.tar.bz2
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause MIT
-Requires: libva-intel-driver-lib
-Requires: libva-intel-driver-license
+Requires: libva-intel-driver-lib = %{version}-%{release}
+Requires: libva-intel-driver-license = %{version}-%{release}
 BuildRequires : pkgconfig(intel-gen4asm)
 BuildRequires : pkgconfig(libdrm)
 BuildRequires : pkgconfig(libdrm_intel)
@@ -32,7 +32,7 @@ Please read the COPYING file available in this package.
 %package lib
 Summary: lib components for the libva-intel-driver package.
 Group: Libraries
-Requires: libva-intel-driver-license
+Requires: libva-intel-driver-license = %{version}-%{release}
 
 %description lib
 lib components for the libva-intel-driver package.
@@ -54,7 +54,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1531402227
+export SOURCE_DATE_EPOCH=1538502914
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -73,11 +73,11 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1531402227
+export SOURCE_DATE_EPOCH=1538502914
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/libva-intel-driver
-cp COPYING %{buildroot}/usr/share/doc/libva-intel-driver/COPYING
-cp test/gtest/LICENSE %{buildroot}/usr/share/doc/libva-intel-driver/test_gtest_LICENSE
+mkdir -p %{buildroot}/usr/share/package-licenses/libva-intel-driver
+cp COPYING %{buildroot}/usr/share/package-licenses/libva-intel-driver/COPYING
+cp test/gtest/LICENSE %{buildroot}/usr/share/package-licenses/libva-intel-driver/test_gtest_LICENSE
 %make_install
 
 %files
@@ -89,5 +89,5 @@ cp test/gtest/LICENSE %{buildroot}/usr/share/doc/libva-intel-driver/test_gtest_L
 
 %files license
 %defattr(-,root,root,-)
-/usr/share/doc/libva-intel-driver/COPYING
-/usr/share/doc/libva-intel-driver/test_gtest_LICENSE
+/usr/share/package-licenses/libva-intel-driver/COPYING
+/usr/share/package-licenses/libva-intel-driver/test_gtest_LICENSE
