@@ -4,7 +4,7 @@
 #
 Name     : libva-intel-driver
 Version  : 2.2.0
-Release  : 25
+Release  : 26
 URL      : https://github.com/intel/intel-vaapi-driver/releases/download/2.2.0/intel-vaapi-driver-2.2.0.tar.bz2
 Source0  : https://github.com/intel/intel-vaapi-driver/releases/download/2.2.0/intel-vaapi-driver-2.2.0.tar.bz2
 Summary  : No detailed summary available
@@ -54,7 +54,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1538502914
+export SOURCE_DATE_EPOCH=1549066376
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -73,7 +73,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1538502914
+export SOURCE_DATE_EPOCH=1549066376
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/libva-intel-driver
 cp COPYING %{buildroot}/usr/share/package-licenses/libva-intel-driver/COPYING
@@ -88,6 +88,6 @@ cp test/gtest/LICENSE %{buildroot}/usr/share/package-licenses/libva-intel-driver
 /usr/lib64/dri/i965_drv_video.so
 
 %files license
-%defattr(-,root,root,-)
+%defattr(0644,root,root,0755)
 /usr/share/package-licenses/libva-intel-driver/COPYING
 /usr/share/package-licenses/libva-intel-driver/test_gtest_LICENSE
