@@ -1,0 +1,76 @@
+From c48fde9f76eb32a592cbf3fee157136a584abd2f Mon Sep 17 00:00:00 2001
+From: William Douglas <william.douglas@intel.com>
+Date: Wed, 9 Oct 2019 13:35:23 -0700
+Subject: [PATCH] Check for python3 rather than python2
+
+With python2 being deprecated, it makes sense to switch gpp.py to be
+python3 compatable and the build system to look for python3 rather
+than python2.
+---
+ configure.ac       |  2 +-
+ src/shaders/gpp.py | 10 +++++-----
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index a0b462f..fdbbf48 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -77,7 +77,7 @@ AC_HEADER_STDC
+ AC_SYS_LARGEFILE
+ AC_CHECK_LIB([m], [sin])
+ AC_CHECK_FUNCS([log2f])
+-AC_CHECK_PROGS([PYTHON2], [python2 python])
++AC_CHECK_PROGS([PYTHON3], [python3 python])
+ 
+ LIBVA_PACKAGE_VERSION=libva_package_version
+ AC_SUBST(LIBVA_PACKAGE_VERSION)
+diff --git a/src/shaders/gpp.py b/src/shaders/gpp.py
+index 7e43f13..6d34b95 100755
+--- a/src/shaders/gpp.py
++++ b/src/shaders/gpp.py
+@@ -64,7 +64,7 @@ class Block:
+ 		self.param_init = []
+ 		for ini in inits:
+ 			try:
+-				val = eval(ini)
++				val = int(eval(ini))
+ 				self.param_init.append(val)
+ 			except:
+ 				raise Exception(self.__errmsg('non an exp: %s'%ini))
+@@ -80,7 +80,7 @@ class Block:
+ 				self.param_op = cond[0]
+ 				limit = cond[1:]
+ 			try:
+-				self.param_limit = eval(limit)
++				self.param_limit = int(eval(limit))
+ 			except:
+ 				raise Exception(self.__errmsg('non an exp: %s'%limit))
+ 		else:
+@@ -172,13 +172,13 @@ def writeblocks(outfile, blocks):
+ if __name__ == '__main__':
+ 	argc = len(sys.argv)
+ 	if argc == 1:
+-		print >>sys.stderr, 'no input file'
++		print('no input file')
+ 		sys.exit(0)
+ 
+ 	try:
+ 		infile = open(sys.argv[1], 'r')
+ 	except IOError:
+-		print >>sys.stderr, 'can not open %s' % sys.argv[1]
++		print('can not open %s' % sys.argv[1])
+ 		sys.exit(1)
+ 
+ 	if argc == 2:
+@@ -187,7 +187,7 @@ if __name__ == '__main__':
+ 		try:
+ 			outfile = open(sys.argv[2], 'w')
+ 		except IOError:
+-			print >>sys.stderr, 'can not write to %s' % sys.argv[2]
++			print('can not write to %s' % sys.argv[2])
+ 			sys.exit(1)
+ 
+ 	lines = readlines(infile)
+-- 
+2.23.0
+
