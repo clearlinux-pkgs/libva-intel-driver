@@ -1,5 +1,25 @@
-intel-vaapi-driver NEWS -- summary of changes.  2018-07-11
-Copyright (C) 2009-2018 Intel Corporation
+intel-vaapi-driver NEWS -- summary of changes.  2019-12-06
+Copyright (C) 2009-2019 Intel Corporation
+
+Version 2.4.0 - 06.Dec.2019
+* Bump version to 2.4.0 for maintenance release
+* Fix the dependency on libEGL
+* Fix ROI support
+* Fix FD leaks on Wayland
+* Fix BRC setting
+* Fix VP8 encoder
+* Fix VP9 encoder
+* Fix meson build
+
+Version 2.3.0 - 10.Dec.2018
+* Bump version to 2.3.0
+* Add new PCI ID for KBL and CFL
+* Fix frame corruption when there are big MVs in VP8 encoding
+* Fix dynamically bitrate resetting in AVC encoding
+* Fix build errors when the toolchain doesn't support -fstack-protector
+* Fix memory leak issue
+* Make sure the achieved bitrate meet the requirement for VP8 encoding
+* Optimize VPP on GEN8
 
 Version 2.2.0 - 11.Jul.2018
 * Bump version to 2.2.0
