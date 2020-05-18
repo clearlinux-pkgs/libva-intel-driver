@@ -4,7 +4,7 @@
 #
 Name     : libva-intel-driver
 Version  : 2.4.0
-Release  : 34
+Release  : 35
 URL      : https://github.com/intel/intel-vaapi-driver/releases/download/2.4.0/intel-vaapi-driver-2.4.0.tar.bz2
 Source0  : https://github.com/intel/intel-vaapi-driver/releases/download/2.4.0/intel-vaapi-driver-2.4.0.tar.bz2
 Summary  : No detailed summary available
@@ -21,6 +21,7 @@ BuildRequires : pkgconfig(libva-drm)
 BuildRequires : pkgconfig(libva-wayland)
 BuildRequires : pkgconfig(libva-x11)
 BuildRequires : pkgconfig(x11)
+Patch1: backport-gcc10.patch
 
 %description
 intel-vaapi-driver
@@ -49,23 +50,31 @@ license components for the libva-intel-driver package.
 %prep
 %setup -q -n intel-vaapi-driver-2.4.0
 cd %{_builddir}/intel-vaapi-driver-2.4.0
+%patch1 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1575912006
+export SOURCE_DATE_EPOCH=1589810583
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
 export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
-export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
-export FFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
+export FCFLAGS="$FFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
+export FFLAGS="$FFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
 export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
 CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" meson --libdir=lib64 --prefix=/usr --buildtype=plain -Denable_hybrid_codec=true  builddir
 ninja -v -C builddir
+
+%check
+export LANG=C.UTF-8
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost,127.0.0.1,0.0.0.0
+meson test -C builddir
 
 %install
 mkdir -p %{buildroot}/usr/share/package-licenses/libva-intel-driver
