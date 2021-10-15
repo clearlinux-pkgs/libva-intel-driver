@@ -4,12 +4,13 @@
 #
 Name     : libva-intel-driver
 Version  : 2.4.1
-Release  : 36
+Release  : 37
 URL      : https://github.com/intel/intel-vaapi-driver/releases/download/2.4.1/intel-vaapi-driver-2.4.1.tar.bz2
 Source0  : https://github.com/intel/intel-vaapi-driver/releases/download/2.4.1/intel-vaapi-driver-2.4.1.tar.bz2
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause MIT
+Requires: libva-intel-driver-filemap = %{version}-%{release}
 Requires: libva-intel-driver-lib = %{version}-%{release}
 Requires: libva-intel-driver-license = %{version}-%{release}
 BuildRequires : buildreq-meson
@@ -29,10 +30,19 @@ License
 -------
 Please read the COPYING file available in this package.
 
+%package filemap
+Summary: filemap components for the libva-intel-driver package.
+Group: Default
+
+%description filemap
+filemap components for the libva-intel-driver package.
+
+
 %package lib
 Summary: lib components for the libva-intel-driver package.
 Group: Libraries
 Requires: libva-intel-driver-license = %{version}-%{release}
+Requires: libva-intel-driver-filemap = %{version}-%{release}
 
 %description lib
 lib components for the libva-intel-driver package.
@@ -49,43 +59,55 @@ license components for the libva-intel-driver package.
 %prep
 %setup -q -n intel-vaapi-driver-2.4.1
 cd %{_builddir}/intel-vaapi-driver-2.4.1
+pushd ..
+cp -a intel-vaapi-driver-2.4.1 buildavx2
+popd
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1612464481
+export SOURCE_DATE_EPOCH=1634311115
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
-export FCFLAGS="$FFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
-export FFLAGS="$FFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
-export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
+export CFLAGS="$CFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -mno-vzeroupper -mprefer-vector-width=256 "
+export FCFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -mno-vzeroupper -mprefer-vector-width=256 "
+export FFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -mno-vzeroupper -mprefer-vector-width=256 "
+export CXXFLAGS="$CXXFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -mno-vzeroupper -mprefer-vector-width=256 "
 CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" meson --libdir=lib64 --prefix=/usr --buildtype=plain -Denable_hybrid_codec=true  builddir
 ninja -v -C builddir
+CFLAGS="$CFLAGS -m64 -march=x86-64-v3 -O3" CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3 " LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3" meson --libdir=lib64 --prefix=/usr --buildtype=plain -Denable_hybrid_codec=true  builddiravx2
+ninja -v -C builddiravx2
 
 %check
 export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-meson test -C builddir
+meson test -C builddir --print-errorlogs
 
 %install
 mkdir -p %{buildroot}/usr/share/package-licenses/libva-intel-driver
 cp %{_builddir}/intel-vaapi-driver-2.4.1/COPYING %{buildroot}/usr/share/package-licenses/libva-intel-driver/099b1aff1b937aad419a0cc7cfb474d2d74acf0b
 cp %{_builddir}/intel-vaapi-driver-2.4.1/test/gtest/LICENSE %{buildroot}/usr/share/package-licenses/libva-intel-driver/5a2314153eadadc69258a9429104cd11804ea304
+DESTDIR=%{buildroot}-v3 ninja -C builddiravx2 install
 DESTDIR=%{buildroot} ninja -C builddir install
+/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot}/usr/share/clear/optimized-elf/ %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 
 %files
 %defattr(-,root,root,-)
 
+%files filemap
+%defattr(-,root,root,-)
+/usr/share/clear/filemap/filemap-libva-intel-driver
+
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/dri/i965_drv_video.so
+/usr/share/clear/optimized-elf/lib*
 
 %files license
 %defattr(0644,root,root,0755)
