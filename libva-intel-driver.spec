@@ -4,12 +4,13 @@
 #
 Name     : libva-intel-driver
 Version  : 2.4.1
-Release  : 40
+Release  : 41
 URL      : https://github.com/intel/intel-vaapi-driver/releases/download/2.4.1/intel-vaapi-driver-2.4.1.tar.bz2
 Source0  : https://github.com/intel/intel-vaapi-driver/releases/download/2.4.1/intel-vaapi-driver-2.4.1.tar.bz2
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause MIT
+Requires: libva-intel-driver-filemap = %{version}-%{release}
 Requires: libva-intel-driver-lib = %{version}-%{release}
 Requires: libva-intel-driver-license = %{version}-%{release}
 BuildRequires : buildreq-meson
@@ -29,10 +30,19 @@ License
 -------
 Please read the COPYING file available in this package.
 
+%package filemap
+Summary: filemap components for the libva-intel-driver package.
+Group: Default
+
+%description filemap
+filemap components for the libva-intel-driver package.
+
+
 %package lib
 Summary: lib components for the libva-intel-driver package.
 Group: Libraries
 Requires: libva-intel-driver-license = %{version}-%{release}
+Requires: libva-intel-driver-filemap = %{version}-%{release}
 
 %description lib
 lib components for the libva-intel-driver package.
@@ -58,7 +68,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1656133821
+export SOURCE_DATE_EPOCH=1656715447
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -90,9 +100,14 @@ DESTDIR=%{buildroot} ninja -C builddir install
 %files
 %defattr(-,root,root,-)
 
+%files filemap
+%defattr(-,root,root,-)
+/usr/share/clear/filemap/filemap-libva-intel-driver
+
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/dri/i965_drv_video.so
+/usr/share/clear/optimized-elf/other*
 
 %files license
 %defattr(0644,root,root,0755)
